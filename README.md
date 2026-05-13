@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BipStone
 
-## Getting Started
+Sistema web para gestão e emissão de ordens de carregamento e reserva de materiais (mármores e granitos).
 
-First, run the development server:
+## 🚀 Funcionalidades
+- Gerenciamento de chapas, lotes e materiais.
+- Emissão de relatórios em PDF para clientes e fornecedores.
+- Exportação de dados de reservas em formato CSV.
+- Disparo de e-mails automáticos com as reservas anexadas.
+- Baseado em SQLite para facilitar a implantação e manutenção de pequeno a médio porte.
 
+## 🛠️ Tecnologias Utilizadas
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- SQLite (via better-sqlite3)
+- pdf-lib
+- nodemailer
+
+## ⚙️ Instalação e Execução
+
+### 1. Clonar o repositório
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <url-do-repositorio>
+cd BipStone
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalar dependências
+```bash
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configurar Banco de Dados (Inicialização)
+Antes de rodar pela primeira vez, é necessário inicializar o banco de dados e inserir os dados iniciais (seeds):
+```bash
+npx tsx scripts/init-db.ts
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Configurar Variáveis de Ambiente
+Crie um arquivo `.env` ou `.env.local` na raiz do projeto com as credenciais de e-mail (caso a funcionalidade de e-mail seja ativada no ambiente de desenvolvimento):
+```env
+EMAIL_PASSWORD=sua_senha_de_app_do_gmail
+```
 
-## Learn More
+### 5. Executar em modo de desenvolvimento
+```bash
+npm run dev
+```
+O servidor estará disponível em [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📦 Build para Produção
+Para gerar a versão otimizada para produção:
+```bash
+npm run build
+npm run start
+```
