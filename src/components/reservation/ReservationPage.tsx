@@ -90,9 +90,21 @@ export default function ReservationPage({ initialMetadata }: { initialMetadata: 
     setIsSaving(false);
 
     if (result.success) {
+      // Gatilho de download para o usuário
+      if (result.files) {
+        const downloadFile = (base64: string, name: string, type: string) => {
+          const link = document.createElement('a');
+          link.href = `data:${type};base64,${base64}`;
+          link.download = name;
+          link.click();
+        };
+
+        downloadFile(result.files.pdf, `${result.files.fileName}.pdf`, 'application/pdf');
+        downloadFile(result.files.csv, `${result.files.fileName}.csv`, 'text/csv');
+      }
+
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 5000);
-      // Limpar campos se desejar
       setCustomer('');
       setItems([{ id: crypto.randomUUID(), materialId: '', finishId: '', thicknessId: '', lot: '', slabNumber: '', measurements: '' }]);
     } else {
@@ -133,7 +145,7 @@ export default function ReservationPage({ initialMetadata }: { initialMetadata: 
         {showSuccess && (
           <div className="bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 p-4 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-300">
             <CheckCircle2 size={20} />
-            <span className="font-medium">Reserva salva e relatórios enviados por e-mail!</span>
+            <span className="font-medium">Reserva salva, arquivos baixados e salvos na pasta /exports!</span>
           </div>
         )}
 

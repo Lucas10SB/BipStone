@@ -2,7 +2,8 @@
 
 import db from '@/lib/db';
 import { generatePDF, generateCSV } from '@/lib/generate-docs';
-import { sendReservationEmail } from '@/lib/mail';
+import fs from 'fs/promises';
+import path from 'path';
 
 interface ReservationItem {
   materialId: string;
@@ -46,7 +47,7 @@ export async function saveReservation(customer: string, date: string, time: stri
 
     const reservationId = transaction();
 
-    // 2. Preparar dados para exportação (buscar nomes em vez de IDs)
+    // 2. Preparar dados para exportação
     const itemsWithNames = items.map(item => {
       const material = db.prepare('SELECT name FROM materials WHERE id = ?').get(item.materialId) as any;
       const finish = db.prepare('SELECT name FROM finishes WHERE id = ?').get(item.finishId) as any;
@@ -64,21 +65,23 @@ export async function saveReservation(customer: string, date: string, time: stri
     const pdfBuffer = await generatePDF(customer, date, time, itemsWithNames);
     const csvContent = generateCSV(customer, date, time, itemsWithNames);
 
-    // 4. Enviar E-mail (Tentativa)
-    // Nota: Vai falhar se EMAIL_PASSWORD não estiver configurado, mas o salvamento no banco já ocorreu.
-    try {
-      if (process.env.EMAIL_PASSWORD) {
-        await sendReservationEmail(pdfBuffer, csvContent, customer);
-        console.log('E-mail enviado com sucesso.');
-      } else {
-        console.warn('EMAIL_PASSWORD não configurado. E-mail não enviado.');
-      }
-    } catch (mailError) {
-      console.error('Erro ao enviar e-mail:', mailError);
-      // Não falha a reserva se o e-mail falhar
-    }
+    // 4. Salvar Localmente na pasta /exports
+    const fileNameBase = `reserva_${customer.replace(/\s+/g, '_')}_${Date.now()}`;
+    const exportsDir = path.join(process.cwd(), 'exports');
+    
+    await fs.writeFile(path.join(exportsDir, `${fileNameBase}.pdf`), pdfBuffer);
+    await fs.writeFile(path.join(exportsDir, `${fileNameBase}.csv`), csvContent);
 
-    return { success: true, id: reservationId };
+    // 5. Retornar dados para Download no Navegador (Base64)
+    return { 
+      success: true, 
+      id: reservationId,
+      files: {
+        pdf: pdfBuffer.toString('base64'),
+        csv: Buffer.from(csvContent).toString('base64'),
+        fileName: fileNameBase
+      }
+    };
   } catch (error) {
     console.error('Erro ao salvar reserva:', error);
     return { success: false, error: 'Erro ao salvar no banco de dados' };
