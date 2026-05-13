@@ -49,19 +49,19 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| UIX-01 | Phase 3 | Pending |
-| UIX-02 | Phase 3 | Pending |
-| UIX-03 | Phase 3 | Pending |
-| UIX-04 | Phase 3 | Pending |
-| UIX-05 | Phase 3 | Pending |
-| DATA-01 | Phase 2 | Pending |
-| DATA-02 | Phase 2 | Pending |
-| DATA-03 | Phase 2 | Pending |
-| LOGIC-01 | Phase 4 | Pending |
-| LOGIC-02 | Phase 3 | Pending |
-| REPT-01 | Phase 5 | Pending |
-| REPT-02 | Phase 5 | Pending |
-| REPT-03 | Phase 5 | Pending |
+| UIX-01 | Phase 3 | Complete |
+| UIX-02 | Phase 3 | Complete |
+| UIX-03 | Phase 3 | Complete |
+| UIX-04 | Phase 3 | Complete |
+| UIX-05 | Phase 3 | Complete |
+| DATA-01 | Phase 1 | Complete |
+| DATA-02 | Phase 2 | Complete |
+| DATA-03 | Phase 2 | Complete |
+| LOGIC-01 | Phase 4 | Complete |
+| LOGIC-02 | Phase 3 | Complete |
+| REPT-01 | Phase 5 | Complete |
+| REPT-02 | Phase 5 | Complete |
+| REPT-03 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 13 total

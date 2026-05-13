@@ -6,11 +6,11 @@ O desenvolvimento do BipStone seguirá uma abordagem incremental, começando pel
 
 ## Phases
 
-- [ ] **Phase 1: Setup & Scaffolding** - Inicialização do projeto Next.js com TypeScript e configurações básicas.
-- [ ] **Phase 2: Database & Data Access** - Configuração do SQLite e criação dos schemas e seeds iniciais.
-- [ ] **Phase 3: Core UI (Reservation Screen)** - Criação da tela de reserva com campos dinâmicos e validações.
-- [ ] **Phase 4: Barcode Logic & Line Management** - Implementação da lógica de leitura de etiquetas e gestão de linhas de chapas.
-- [ ] **Phase 5: Exports & Email** - Geração de PDF/CSV e integração com serviço de e-mail.
+- [x] **Phase 1: Setup & Scaffolding** - Inicialização do projeto Next.js com TypeScript e configurações básicas. (Completed 2026-05-12)
+- [x] **Phase 2: Database & Data Access** - Configuração do SQLite e criação dos schemas e seeds iniciais. (Completed 2026-05-12)
+- [x] **Phase 3: Core UI (Reservation Screen)** - Criação da tela de reserva com campos dinâmicos e validações. (Completed 2026-05-12)
+- [x] **Phase 4: Barcode Logic & Line Management** - Implementação da lógica de leitura de etiquetas e gestão de linhas de chapas. (Completed 2026-05-12)
+- [x] **Phase 5: Exports & Email** - Geração de PDF/CSV e integração com serviço de e-mail. (Completed 2026-05-12)
 
 ## Phase Details
 
@@ -25,7 +25,7 @@ O desenvolvimento do BipStone seguirá uma abordagem incremental, começando pel
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: Inicializar Next.js e configurar ambiente base.
+- [x] 01-01: Inicializar Next.js e configurar ambiente base.
 
 ### Phase 2: Database & Data Access
 **Goal**: Persistência de dados funcional.
@@ -38,7 +38,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 02-01: Configurar SQLite, Prisma/Better-SQLite3 e criar migrations.
+- [x] 02-01: Configurar SQLite, Prisma/Better-SQLite3 e criar migrations.
 
 ### Phase 3: Core UI (Reservation Screen)
 **Goal**: Interface de usuário funcional para entrada de dados.
@@ -51,8 +51,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: Criar layout base e componentes de formulário.
-- [ ] 03-02: Implementar estado da tabela de chapas e validações.
+- [x] 03-01: Criar layout base e componentes de formulário.
+- [x] 03-02: Implementar estado da tabela de chapas e validações.
 
 ### Phase 4: Barcode Logic & Line Management
 **Goal**: Lógica de identificação de chapas funcional.
@@ -64,7 +64,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 04-01: Implementar lógica de parsing de código de barras e gestão de medidas.
+- [x] 04-01: Implementar lógica de parsing de código de barras e gestão de medidas.
 
 ### Phase 5: Exports & Email
 **Goal**: Entrega dos resultados e comunicação externa.
@@ -77,15 +77,15 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: Implementar geradores de PDF e CSV.
-- [ ] 05-02: Configurar Nodemailer/API de e-mail e finalizar fluxo.
+- [x] 05-01: Implementar geradores de PDF e CSV.
+- [x] 05-02: Configurar Nodemailer/API de e-mail e finalizar fluxo.
 
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Setup & Scaffolding | 0/1 | Not started | - |
-| 2. Database & Data Access | 0/1 | Not started | - |
-| 3. Core UI | 0/2 | Not started | - |
-| 4. Barcode Logic | 0/1 | Not started | - |
-| 5. Exports & Email | 0/2 | Not started | - |
+| 1. Setup & Scaffolding | 1/1 | Complete | 2026-05-12 |
+| 2. Database & Data Access | 1/1 | Complete | 2026-05-12 |
+| 3. Core UI | 2/2 | Complete | 2026-05-12 |
+| 4. Barcode Logic | 1/1 | Complete | 2026-05-12 |
+| 5. Exports & Email | 2/2 | Complete | 2026-05-12 |
