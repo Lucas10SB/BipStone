@@ -11,35 +11,44 @@ interface ReservationItem {
   thicknessId: string;
   lot: string;
   slabNumber: string;
-  measurements: string;
+  length: string;
+  height: string;
 }
 
-export async function saveReservation(customer: string, date: string, time: string, items: ReservationItem[]) {
+export async function saveReservation(
+  customer: string, 
+  loadingOrder: string,
+  date: string, 
+  time: string, 
+  items: ReservationItem[]
+) {
   try {
     // 1. Salvar no Banco de Dados
     const insertReservation = db.prepare(`
-      INSERT INTO reservations (customer_name, date, time)
-      VALUES (?, ?, ?)
+      INSERT INTO reservations (customer_name, loading_order, date, time)
+      VALUES (?, ?, ?, ?)
     `);
 
     const insertItem = db.prepare(`
-      INSERT INTO reservation_items (reservation_id, material_id, finish_id, thickness_id, lot, slab_number, measurements)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO reservation_items (reservation_id, material_id, finish_id, thickness_id, lot, slab_number, length, height, measurements)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     const transaction = db.transaction(() => {
-      const result = insertReservation.run(customer, date, time);
+      const result = insertReservation.run(customer, loadingOrder, date, time);
       const reservationId = result.lastInsertRowid;
 
       for (const item of items) {
         insertItem.run(
           reservationId,
-          parseInt(item.materialId),
-          parseInt(item.finishId),
-          parseInt(item.thicknessId),
+          parseInt(item.materialId) || 0,
+          parseInt(item.finishId) || 0,
+          parseInt(item.thicknessId) || 0,
           item.lot,
           item.slabNumber,
-          item.measurements
+          item.length,
+          item.height,
+          `${item.length} x ${item.height}`
         );
       }
       return reservationId;
@@ -62,17 +71,16 @@ export async function saveReservation(customer: string, date: string, time: stri
     });
 
     // 3. Gerar Documentos
-    const pdfBuffer = await generatePDF(customer, date, time, itemsWithNames);
-    const csvContent = generateCSV(customer, date, time, itemsWithNames);
+    const pdfBuffer = await generatePDF(customer, loadingOrder, date, time, itemsWithNames);
+    const csvContent = generateCSV(customer, loadingOrder, date, time, itemsWithNames);
 
-    // 4. Salvar Localmente na pasta /exports
+    // 4. Salvar Localmente
     const fileNameBase = `reserva_${customer.replace(/\s+/g, '_')}_${Date.now()}`;
     const exportsDir = path.join(process.cwd(), 'exports');
     
     await fs.writeFile(path.join(exportsDir, `${fileNameBase}.pdf`), pdfBuffer);
     await fs.writeFile(path.join(exportsDir, `${fileNameBase}.csv`), csvContent);
 
-    // 5. Retornar dados para Download no Navegador (Base64)
     return { 
       success: true, 
       id: reservationId,
@@ -82,8 +90,8 @@ export async function saveReservation(customer: string, date: string, time: stri
         fileName: fileNameBase
       }
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Erro ao salvar reserva:', error);
-    return { success: false, error: 'Erro ao salvar no banco de dados' };
+    return { success: false, error: error.message || 'Erro ao salvar no banco de dados' };
   }
 }
